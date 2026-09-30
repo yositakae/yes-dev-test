@@ -1,0 +1,10 @@
+BEGIN;
+
+ALTER TABLE users
+  ADD COLUMN IF NOT EXISTS invite_token VARCHAR(200) UNIQUE,
+  ADD COLUMN IF NOT EXISTS invite_expires_at TIMESTAMPTZ,
+  ADD COLUMN IF NOT EXISTS is_active BOOLEAN NOT NULL DEFAULT FALSE;
+
+UPDATE users SET is_active = TRUE WHERE hash_password IS NOT NULL AND hash_password <> '';
+
+COMMIT;
