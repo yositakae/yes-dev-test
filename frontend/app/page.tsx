@@ -100,7 +100,8 @@ export default function Home() {
       }
       return;
     }
-    const response = await fetch(`${apiUrl}/products/${encodeURIComponent(sku)}/qr`, { method: "POST", headers: { "Content-Type": "application/json", Authorization: `Bearer ${window.localStorage.getItem("product-admin-token") ?? ""}` }, body: JSON.stringify({ publicBaseUrl: window.location.origin, ...options }) });
+    const publicBaseUrl = process.env.NEXT_PUBLIC_APP_URL ?? window.location.origin;
+    const response = await fetch(`${apiUrl}/products/${encodeURIComponent(sku)}/qr`, { method: "POST", headers: { "Content-Type": "application/json", Authorization: `Bearer ${window.localStorage.getItem("product-admin-token") ?? ""}` }, body: JSON.stringify({ publicBaseUrl, ...options }) });
     const product = await response.json();
     if (!response.ok) return setError(product.message ?? "สร้าง QR ไม่สำเร็จ");
     setQr(product.qrProducts);
