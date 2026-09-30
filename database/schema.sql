@@ -22,12 +22,12 @@ CREATE TABLE products_category (
 
 CREATE TABLE products (
     id              INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    sku             VARCHAR(200) NOT NULL UNIQUE,
-    name            VARCHAR(200) NOT NULL,
-    category_id     INTEGER NOT NULL REFERENCES products_category(id) ON UPDATE CASCADE ON DELETE RESTRICT,
-    price           INTEGER NOT NULL CHECK (price >= 0),
+    sku             VARCHAR(200) UNIQUE,
+    name            VARCHAR(200),
+    category_id     INTEGER REFERENCES products_category(id) ON UPDATE CASCADE ON DELETE RESTRICT,
+    price           INTEGER CHECK (price >= 0),
     size            VARCHAR(500),
-    type            product_type NOT NULL,
+    type            product_type,
     description     VARCHAR(500),
     how_to_use     VARCHAR(500),
     status          product_status NOT NULL DEFAULT 'active',
